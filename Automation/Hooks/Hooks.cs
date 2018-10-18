@@ -1,15 +1,13 @@
-﻿using OpenQA.Selenium;
+﻿using BoDi;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using TechTalk.SpecFlow;
 using TechTalk.SpecRun.Common.Helper;
 
@@ -18,7 +16,13 @@ namespace Automation.Hooks
     [Binding]
     public sealed class Hooks
     {
-        
+        private readonly IObjectContainer objectContainer;
+
+        public Hooks(IObjectContainer objectContainer)
+        {
+            this.objectContainer = objectContainer;
+        }
+
         [BeforeScenario]
         public void BeforeScenario()
         {
@@ -38,18 +42,15 @@ namespace Automation.Hooks
                 Console.WriteLine(ex.Message);
             }
 
-            //Add WebDriver to the ScenarioContext
-            ScenarioContext.Current.Set(
-                GetWebDriver(browser),
-                "IWebDriver");
+            var webDriver = GetWebDriver(browser);
+            objectContainer.RegisterInstanceAs<IWebDriver>(webDriver);
         }
 
         [AfterScenario]
         public void AfterScenario()
         {
-            //Close the Driver
-            ScenarioContext.Current.Get<IWebDriver>("IWebDriver")
-                .Close();
+            var webDriver = objectContainer.Resolve<IWebDriver>();
+            webDriver.Close();
         }
 
         public static IWebDriver GetWebDriver(string browser)
@@ -126,7 +127,7 @@ namespace Automation.Hooks
                     //driver = new FirefoxDriver(service);
 
                     FirefoxOptions ffoptions = new FirefoxOptions();
-                    ffoptions.BrowserExecutableLocation = @"C:\Program Files (x86)\Mozilla Firefox\firefox.exe";
+                    ffoptions.BrowserExecutableLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
                     driver = new FirefoxDriver(ffoptions);
 
                     //Set Implicit Wait time to 10 seconds
