@@ -9,10 +9,12 @@ namespace Automation
     public class GoogleSearchSteps
     {
         private readonly IWebDriver _driver;
+        private string _searchCriteria;
 
-        public GoogleSearchSteps(IWebDriver driver)
+        public GoogleSearchSteps(IWebDriver driver, FieldData fieldData)
         {
             _driver = driver;
+            _searchCriteria = fieldData.SearchCriteria;
         }
 
         [Given(@"a user who is on the google homepage")]
@@ -24,16 +26,17 @@ namespace Automation
         [When(@"the user searches for (.*)")]
         public void WhenTheUserSearchesFor(string input)
         {
+            _searchCriteria = input;
             var searchbar = _driver.FindElement(By.Name("q"));
-            searchbar.SendKeys(input);
+            searchbar.SendKeys(_searchCriteria);
             searchbar.Submit();
         }
         
-        [Then(@"the user should be redirected to a page of search results for (.*)")]
-        public void ThenTheUserShouldBeRedirectedToAPageOfSearchResults(string input)
+        [Then(@"the user should be redirected to a page of relevant search results")]
+        public void ThenTheUserShouldBeRedirectedToAPageOfRelevantSearchResults()
         {
             var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until(d => d.Title.StartsWith(input, StringComparison.OrdinalIgnoreCase));
+            wait.Until(d => d.Title.StartsWith(_searchCriteria, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -171,6 +171,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextClasses\FieldData.cs" />
     <Compile Include="SeleniumSteps\GoogleSearchSteps.cs" />
     <Compile Include="Hooks\Hooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

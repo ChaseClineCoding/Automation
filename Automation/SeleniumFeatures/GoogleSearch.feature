@@ -6,10 +6,10 @@
 Scenario: Use the search bar
 	Given a user who is on the google homepage
 	When the user searches for SpecFlow
-	Then the user should be redirected to a page of search results for SpecFlow
+	Then the user should be redirected to a page of relevant search results
 
 	@searchbar
 Scenario: Use the search bar 1
 	Given a user who is on the google homepage
 	When the user searches for something
-	Then the user should be redirected to a page of search results for something
+	Then the user should be redirected to a page of relevant search results

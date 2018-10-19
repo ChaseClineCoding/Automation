@@ -80,7 +80,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
  testRunner.When("the user searches for SpecFlow", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.Then("the user should be redirected to a page of search results for SpecFlow", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the user should be redirected to a page of relevant search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -99,7 +99,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
  testRunner.When("the user searches for something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("the user should be redirected to a page of search results for something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the user should be redirected to a page of relevant search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
